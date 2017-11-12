@@ -56,17 +56,19 @@ We start of with some convolution layers with a RELU activation function, follow
 | RELU					|												| 
 | Convolution 5x5     	| 2x2 stride, 36 depth 						 	|
 | RELU					|												| 
-| Convolution 5x5     	| 2x2 stride, 48 depth 						 	|
+| Convolution 3x3     	| 2x2 stride, 48 depth 						 	|
 | RELU					|												| 
 | Convolution 3x3     	| 2x2 stride, 64 depth 						 	|
+| RELU					|												| 
+| Convolution 3x3     	| 2x2 stride, 96 depth 						 	|
 | RELU					|												|
 | Flatten				|												|
-| Fully connected		| outputs 1000									|
+| Fully connected		| outputs 1200									|
 | Dropout				| Keep probability 0.5							|
-| Fully connected		| outputs 400									|
+| Fully connected		| outputs 600									|
 | Dropout				| Keep probability 0.5							|
-| Fully connected		| outputs 200									|
-| Fully connected		| outputs 50									|
+| Fully connected		| outputs 250									|
+| Fully connected		| outputs 50s									|
 | Fully connected		| outputs 1										|
 
 The model was trained and validated on different data sets to ensure that the model was not overfitting. The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
@@ -77,7 +79,7 @@ The learning rate was not tuned manually, as the model uses an Adam optimizer.
 
 #### Training data
 
-Training data was chosen to keep the vehicle driving on the road. The training data contains two laps of driving around the track cleanly (first picture), one lap driving in the opposite direction and a lap where we just recorded recovery moves (second picture, notice the steep angle to the left as we are on the right side of the road).
+Training data was chosen to keep the vehicle driving on the road. The training data contains three laps of driving around the track cleanly (first picture), one lap driving in the opposite direction and a lap where we just recorded recovery moves (second picture, notice the steep angle to the left as we are on the right side of the road).
 
 ![Center Lane Driving][image1]
 
@@ -91,5 +93,5 @@ We played around with flipping the data set and negativing the steering angle, b
 
 Track 2, a more challenging track as it includes shadows, a middle line edge, hills and lanes right next to each other, was completely ignored when getting input data for Track 1.
 
-The input data is shuffled before we start training, and use 20% of the input data for validation. As mentioned, we do not reserve any data for testing, but instead test on the actual track itself. We used 3 epochs, but if we had more time, adding more epochs would prove useful as the loss kept decreasing.
+The input data is shuffled before we start training, and use 20% of the input data for validation. As mentioned, we do not reserve any data for testing, but instead test on the actual track itself. We use a single epoch, as that seemed enough to train this model.
 
