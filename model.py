@@ -14,7 +14,7 @@ with open('C:/Users/joris/Desktop//driving_data/driving_log.csv') as csvfile:
 # Load all the images and corresponding steering angles
 images = []
 angles = []
-correction = 0.3
+correction = 0.25
 for line in lines:
     img_path = line[0]
     filename = img_path.split('\\')[-1]
@@ -33,7 +33,7 @@ for line in lines:
     curr_path = 'C:/Users/joris/Desktop/driving_data/IMG/' + filename
     img = cv2.imread(curr_path)
     images.append(img)
-    
+
     angle = float(line[3])
     angles.append(angle)
     angles.append(angle + correction)
@@ -52,22 +52,22 @@ model.add(Cropping2D(cropping=((60, 25), (0, 0)), input_shape=(160, 320, 3)))
 # Define the convolutional and fully connected layers, with dropout
 model.add(Convolution2D(24, (5, 5), strides=(2, 2), activation="relu"))
 model.add(Convolution2D(36, (5, 5), strides=(2, 2), activation="relu"))
-model.add(Convolution2D(48, (5, 5), strides=(2, 2), activation="relu"))
+model.add(Convolution2D(48, (3, 3), strides=(2, 2), activation="relu"))
 model.add(Convolution2D(64, (3, 3), strides=(2, 2), activation="relu"))
+model.add(Convolution2D(96, (3, 3), strides=(2, 2), activation="relu"))
 model.add(Flatten())
-model.add(Dense(1000))
+model.add(Dense(1200))
 model.add(Dropout(0.5))
-model.add(Dense(400))
+model.add(Dense(600))
 model.add(Dropout(0.5))
-model.add(Dense(200))
+model.add(Dense(250))
 model.add(Dense(50))
 model.add(Dense(1))
 
 # model = load_model('model.h5')
 
 model.compile(loss='mse', optimizer='adam')
-model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=3)
+model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=1)
 
 model.save('model.h5')
-
 
